@@ -1,38 +1,21 @@
-﻿
+﻿// Password segreta
+string passwordSegreta = "tucano";
+
+do // ciclo do while per richiedere la password
 {
+    Console.Write("Inserisci la password: ");
+    string passwordUtente = Console.ReadLine();
+
+    // Verifica se la password è corretta
+    if (passwordUtente == passwordSegreta)
     {
-        Console.WriteLine("Inserisci la lunghezza del lato del triangolo:");
-        
-        // Leggi la lunghezza inserita dall'utente
-        if (int.TryParse(Console.ReadLine(), out int lunghezza))
-        {
-            // Disegna il triangolo
-            DisegnaTriangolo(lunghezza);
-        }
-        else
-        {
-            Console.WriteLine("Inserisci un valore valido.");
-        }
+        Console.WriteLine("Complimenti la password è corretta!");
+        return;  // Esci dal ciclo do-while se la password è corretta
+    }
+    else
+    {
+        Console.WriteLine("Mi dispiace la password è sbagliata! Riprova...");
     }
 
-    static void DisegnaTriangolo(int lunghezza)
-    {
-        for (int i = 1; i <= lunghezza; i++)
-        {
-            // Stampa gli spazi bianchi a sinistra del triangolo
-            for (int j = 0; j < lunghezza - i; j++)
-            {
-                Console.Write(" ");
-            }
-
-            // Stampa gli asterischi del triangolo
-            for (int j = 0; j < 2 * i - 1; j++)
-            {
-                Console.Write("*");
-            }
-
-            // Vai a una nuova linea dopo aver stampato una riga del triangolo
-            Console.WriteLine();
-        }
-    }
-}
+} while (true);
+    
