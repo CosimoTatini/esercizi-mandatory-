@@ -1,38 +1,64 @@
-﻿
+using System;
+
+class Calculator
 {
+    static void Main()
     {
-        Console.WriteLine("Inserisci la lunghezza del lato del triangolo:");
-        
-        // Leggi la lunghezza inserita dall'utente
-        if (int.TryParse(Console.ReadLine(), out int lunghezza))
+        try
         {
-            // Disegna il triangolo
-            DisegnaTriangolo(lunghezza);
+            Console.Write("Inserisci un'espressione matematica: ");
+            string input = Console.ReadLine();
+
+            double result = CalculateExpression(input);
+
+            Console.WriteLine("Risultato: " + result);
         }
-        else
+        catch (InvalidExpressionException ex)
         {
-            Console.WriteLine("Inserisci un valore valido.");
+            Console.WriteLine("Errore: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Errore generico: " + ex.Message);
         }
     }
 
-    static void DisegnaTriangolo(int lunghezza)
+    static double CalculateExpression(string expression)
     {
-        for (int i = 1; i <= lunghezza; i++)
+        try
         {
-            // Stampa gli spazi bianchi a sinistra del triangolo
-            for (int j = 0; j < lunghezza - i; j++)
-            {
-                Console.Write(" ");
-            }
-
-            // Stampa gli asterischi del triangolo
-            for (int j = 0; j < 2 * i - 1; j++)
-            {
-                Console.Write("*");
-            }
-
-            // Vai a una nuova linea dopo aver stampato una riga del triangolo
-            Console.WriteLine();
+            // Esegui il calcolo utilizzando il metodo di valutazione dell'espressione
+            return EvaluateExpression(expression);
         }
+        catch (Exception ex)
+        {
+            // Se si verifica un errore durante il calcolo, genera un'eccezione personalizzata
+            throw new InvalidExpressionException("Espressione non valida", ex);
+        }
+    }
+
+    static double EvaluateExpression(string expression)
+    {
+        // Verifica la divisione per zero prima di eseguire il calcolo
+        if (expression.Contains("/0"))
+        {
+            throw new InvalidExpressionException("Divisione per zero non consentita");
+        }
+
+        // Utilizza la classe DataTable per eseguire la valutazione dell'espressione
+        System.Data.DataTable table = new System.Data.DataTable();
+        return Convert.ToDouble(table.Compute(expression, string.Empty));
+    }
+}
+
+// Eccezione personalizzata per gestire errori di espressione non valida
+class InvalidExpressionException : Exception
+{
+    public InvalidExpressionException(string message) : base(message)
+    {
+    }
+
+    public InvalidExpressionException(string message, Exception innerException) : base(message, innerException)
+    {
     }
 }
