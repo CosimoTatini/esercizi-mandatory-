@@ -1,38 +1,34 @@
-﻿
+using System;
+using System.Collections.Generic;
+
+class Program
 {
+    static void Main()
     {
-        Console.WriteLine("Inserisci la lunghezza del lato del triangolo:");
-        
-        // Leggi la lunghezza inserita dall'utente
-        if (int.TryParse(Console.ReadLine(), out int lunghezza))
+        // Creazione del dizionario città-codice postale
+        Dictionary<string, string> dizionarioCodiciPostali = new Dictionary<string, string>
         {
-            // Disegna il triangolo
-            DisegnaTriangolo(lunghezza);
+            {"Roma", "00100"},
+            {"Milano", "20100"},
+            {"Napoli", "80100"},
+            // Aggiungi altre città e codici postali secondo necessità
+        };
+
+        // Chiedi all'utente di inserire il nome della città
+        Console.Write("Inserisci il nome della città: ");
+        string nomeCitta = Console.ReadLine();
+
+        // Cerca il codice postale nella mappa delle città
+        if (dizionarioCodiciPostali.ContainsKey(nomeCitta))
+        {
+            string codicePostale = dizionarioCodiciPostali[nomeCitta];
+            Console.WriteLine($"Il codice postale di {nomeCitta} è: {codicePostale}");
         }
         else
         {
-            Console.WriteLine("Inserisci un valore valido.");
-        }
-    }
-
-    static void DisegnaTriangolo(int lunghezza)
-    {
-        for (int i = 1; i <= lunghezza; i++)
-        {
-            // Stampa gli spazi bianchi a sinistra del triangolo
-            for (int j = 0; j < lunghezza - i; j++)
-            {
-                Console.Write(" ");
-            }
-
-            // Stampa gli asterischi del triangolo
-            for (int j = 0; j < 2 * i - 1; j++)
-            {
-                Console.Write("*");
-            }
-
-            // Vai a una nuova linea dopo aver stampato una riga del triangolo
-            Console.WriteLine();
+            Console.WriteLine($"La città {nomeCitta} non è presente nel dizionario.");
         }
     }
 }
+
+
