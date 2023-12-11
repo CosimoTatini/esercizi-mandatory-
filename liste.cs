@@ -1,38 +1,97 @@
-﻿
+using System;
+using System.Collections.Generic;
+
+class Program
 {
+    static void Main()
     {
-        Console.WriteLine("Inserisci la lunghezza del lato del triangolo:");
-        
-        // Leggi la lunghezza inserita dall'utente
-        if (int.TryParse(Console.ReadLine(), out int lunghezza))
+        List<int> listaNumeri = new List<int>();
+
+        while (true)
         {
-            // Disegna il triangolo
-            DisegnaTriangolo(lunghezza);
+            Console.WriteLine("\nMenu:");
+            Console.WriteLine("1. Aggiungi numero");
+            Console.WriteLine("2. Rimuovi numero");
+            Console.WriteLine("3. Visualizza tutti i numeri");
+            Console.WriteLine("4. Esci");
+
+            Console.Write("Seleziona un'opzione (1-4): ");
+            string scelta = Console.ReadLine();
+
+            switch (scelta)
+            {
+                case "1":
+                    AggiungiNumero(listaNumeri);
+                    break;
+
+                case "2":
+                    RimuoviNumero(listaNumeri);
+                    break;
+
+                case "3":
+                    VisualizzaNumeri(listaNumeri);
+                    break;
+
+                case "4":
+                    Environment.Exit(0);
+                    break;
+
+                default:
+                    Console.WriteLine("Opzione non valida. Riprova.");
+                    break;
+            }
+        }
+    }
+
+    static void AggiungiNumero(List<int> lista)
+    {
+        Console.Write("Inserisci un numero intero da aggiungere: ");
+        if (int.TryParse(Console.ReadLine(), out int numero))
+        {
+            lista.Add(numero);
+            Console.WriteLine($"Il numero {numero} è stato aggiunto alla lista.");
         }
         else
         {
-            Console.WriteLine("Inserisci un valore valido.");
+            Console.WriteLine("Inserimento non valido. Assicurati di inserire un numero intero.");
         }
     }
 
-    static void DisegnaTriangolo(int lunghezza)
+    static void RimuoviNumero(List<int> lista)
     {
-        for (int i = 1; i <= lunghezza; i++)
+        if (lista.Count == 0)
         {
-            // Stampa gli spazi bianchi a sinistra del triangolo
-            for (int j = 0; j < lunghezza - i; j++)
-            {
-                Console.Write(" ");
-            }
+            Console.WriteLine("La lista è vuota. Non ci sono elementi da rimuovere.");
+            return;
+        }
 
-            // Stampa gli asterischi del triangolo
-            for (int j = 0; j < 2 * i - 1; j++)
-            {
-                Console.Write("*");
-            }
+        Console.Write("Inserisci l'indice del numero da rimuovere: ");
+        if (int.TryParse(Console.ReadLine(), out int indice) && indice >= 0 && indice < lista.Count)
+        {
+            int numeroRimosso = lista[indice];
+            lista.RemoveAt(indice);
+            Console.WriteLine($"Il numero {numeroRimosso} è stato rimosso dalla lista.");
+        }
+        else
+        {
+            Console.WriteLine("Indice non valido. Assicurati di inserire un indice valido.");
+        }
+    }
 
-            // Vai a una nuova linea dopo aver stampato una riga del triangolo
-            Console.WriteLine();
+    static void VisualizzaNumeri(List<int> lista)
+    {
+        if (lista.Count == 0)
+        {
+            Console.WriteLine("La lista è vuota. Non ci sono elementi da visualizzare.");
+        }
+        else
+        {
+            Console.WriteLine("Numeri nella lista:");
+            for (int i = 0; i < lista.Count; i++)
+            {
+                Console.WriteLine($"{i}. {lista[i]}");
+            }
         }
     }
 }
+
