@@ -1,38 +1,43 @@
-﻿
+using System;
+using System.IO;
+
+class Program
 {
+    static void Main()
     {
-        Console.WriteLine("Inserisci la lunghezza del lato del triangolo:");
-        
-        // Leggi la lunghezza inserita dall'utente
-        if (int.TryParse(Console.ReadLine(), out int lunghezza))
+        // Inserisci il percorso completo del file che vuoi leggere
+        string percorsoFile = "C:\\Users\\STUDENTE\\Desktop\\file.txt";
+
+        try
         {
-            // Disegna il triangolo
-            DisegnaTriangolo(lunghezza);
+            // Leggi il contenuto del file
+            string contenuto = LeggiContenutoFile(percorsoFile);
+
+            // Stampa il contenuto del file
+            Console.WriteLine("Contenuto del file:");
+            Console.WriteLine(contenuto);
         }
-        else
+        catch (FileNotFoundException)
         {
-            Console.WriteLine("Inserisci un valore valido.");
+            Console.WriteLine($"Il file '{percorsoFile}' non esiste.");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Console.WriteLine($"Accesso negato al file '{percorsoFile}'. Verifica i permessi di accesso.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Si è verificato un errore: {ex.Message}");
         }
     }
 
-    static void DisegnaTriangolo(int lunghezza)
+    static string LeggiContenutoFile(string percorso)
     {
-        for (int i = 1; i <= lunghezza; i++)
+        // Utilizza la classe StreamReader per leggere il contenuto del file
+        using (StreamReader reader = new StreamReader(percorso))
         {
-            // Stampa gli spazi bianchi a sinistra del triangolo
-            for (int j = 0; j < lunghezza - i; j++)
-            {
-                Console.Write(" ");
-            }
-
-            // Stampa gli asterischi del triangolo
-            for (int j = 0; j < 2 * i - 1; j++)
-            {
-                Console.Write("*");
-            }
-
-            // Vai a una nuova linea dopo aver stampato una riga del triangolo
-            Console.WriteLine();
+            // Restituisci il contenuto del file come stringa
+            return reader.ReadToEnd();
         }
     }
 }
