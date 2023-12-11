@@ -1,38 +1,59 @@
-﻿
+int punteggio = 0;
+int punteggio2 = 0;
+int differenzapunteggio = 0;
+int giocatore = 0;
+int i = 0;
+var nomigiocatore= new System.Collections.Generic.Dictionary<string,int>();
+while (true)
 {
+    Console.WriteLine("Inserisci il nome del giocatore(scrivi 'fine' per uscire):");
+    string nomegiocatore= Console.ReadLine();
+    if (nomegiocatore.ToLower() == "fine")
     {
-        Console.WriteLine("Inserisci la lunghezza del lato del triangolo:");
-        
-        // Leggi la lunghezza inserita dall'utente
-        if (int.TryParse(Console.ReadLine(), out int lunghezza))
-        {
-            // Disegna il triangolo
-            DisegnaTriangolo(lunghezza);
-        }
-        else
-        {
-            Console.WriteLine("Inserisci un valore valido.");
-        }
+        break;
     }
 
-    static void DisegnaTriangolo(int lunghezza)
-    {
-        for (int i = 1; i <= lunghezza; i++)
+    Console.WriteLine("Scrivi il tuo punteggio");
+    int puntigiocatore;
+    while (!int.TryParse (Console.ReadLine(), out puntigiocatore))
+    { Console.WriteLine("Input invalido");
+    }
+    nomigiocatore[nomegiocatore] = puntigiocatore;
+}
+
+Console.WriteLine("\nGiocatori e punti:");
+foreach (var nomi in nomigiocatore)
+{
+    Console.WriteLine($"{nomi.Key}:{nomi.Value} punti");
+}
+MostraDifferenza(nomigiocatore);
+static void MostraDifferenza(System.Collections.Generic.Dictionary <string,int> nomigiocatore)
+{
+    Console.WriteLine("\nDifferenza punti:");
+}
+foreach (var giocatore1 in nomigiocatore)
+{
+ foreach (var giocatore2 in nomigiocatore)
+    { 
+    if (giocatore1.Key != giocatore2.Key)
         {
-            // Stampa gli spazi bianchi a sinistra del triangolo
-            for (int j = 0; j < lunghezza - i; j++)
-            {
-                Console.Write(" ");
-            }
-
-            // Stampa gli asterischi del triangolo
-            for (int j = 0; j < 2 * i - 1; j++)
-            {
-                Console.Write("*");
-            }
-
-            // Vai a una nuova linea dopo aver stampato una riga del triangolo
-            Console.WriteLine();
+            differenzapunteggio = Math.Abs(giocatore1.Value - giocatore2.Value);
+            Console.WriteLine($"{giocatore1.Key} - {giocatore2.Key}: {differenzapunteggio}");
         }
     }
+}
+if (differenzapunteggio < 10)
+{
+   
+    Console.WriteLine("Partita equilibrata");
+
+
+}
+else if (differenzapunteggio >=10 && differenzapunteggio <=20)
+{
+    Console.WriteLine("Partita interessante");
+}
+else if (differenzapunteggio > 20)
+{
+    Console.WriteLine("Partita intensa");
 }
